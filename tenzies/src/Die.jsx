@@ -1,5 +1,9 @@
 export default function Die(props) {
     return (
-        <button key={props.index}>{props.value}</button>
+        <button
+            // key={props.key}
+            onClick={props.hold}
+            className={props.isHeld ? "clicked" : "unclicked"}
+        >{props.value}</button>
     )
 }

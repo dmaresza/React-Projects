@@ -68,6 +68,10 @@ button {
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
 }
 
+.dice-container>button.clicked {
+  background-color: #59E391;
+}
+
 .roll-button {
   color: white;
   background-color: #5035FF;
