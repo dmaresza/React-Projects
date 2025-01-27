@@ -45,6 +45,17 @@ main {
   align-items: center;
 }
 
+main>h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+main>p {
+  margin: 0;
+  text-align: center;
+  max-width: 350px;
+}
+
 .dice-container {
   display: grid;
   grid-template: auto auto / repeat(5, 1fr);
