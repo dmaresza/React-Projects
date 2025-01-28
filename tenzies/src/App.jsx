@@ -1,5 +1,6 @@
 import Die from "./Die.jsx"
 import { useState, useEffect, useRef } from "react"
+import { useWindowSize } from "react-use"
 import { nanoid } from "nanoid"
 import Confetti from "react-confetti"
 
@@ -16,6 +17,7 @@ export default function App() {
     />))
   const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
   const buttonRef = useRef(null)
+  const { width, height } = useWindowSize()
 
   // Effects
   useEffect(() => {
@@ -52,7 +54,7 @@ export default function App() {
   // JSX elements
   return (
     <main>
-      {gameWon && <Confetti />}
+      {gameWon && <Confetti width={width} height={height} />}
       <div aria-live="polite" className="sr-only">
         {gameWon && <p>Congratulations! You won! Press "New Game" to start again.</p>}
       </div>
