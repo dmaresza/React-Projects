@@ -8,14 +8,15 @@ export default function App() {
 
   // Constants
   const [dice, setDice] = useState(() => generateAllNewDice())
+  const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
   const diceComponents = dice.map(die => (
     <Die
       key={die.id}
       value={die.value}
       isHeld={die.isHeld}
+      disabled={gameWon}
       hold={() => hold(die.id)}
     />))
-  const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
   const buttonRef = useRef(null)
   const { width, height } = useWindowSize()
 

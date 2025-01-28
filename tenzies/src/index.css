@@ -68,6 +68,11 @@ button {
   background-color: #59E391;
 }
 
+.dice-container>button:disabled {
+  cursor: auto;
+  opacity: 0.5;
+}
+
 .roll-button {
   color: white;
   background-color: #5035FF;
