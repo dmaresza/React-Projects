@@ -8,6 +8,7 @@ export default function App() {
 
   // Constants
   const [dice, setDice] = useState(() => generateAllNewDice())
+  const [numRolls, setNumRolls] = useState(0)
   const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
   const diceComponents = dice.map(die => (
     <Die
@@ -37,6 +38,7 @@ export default function App() {
   }
 
   function rollDice() {
+    setNumRolls(prevRolls => prevRolls + 1)
     setDice(prevDice => (
       prevDice.map(die => (
         die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) }
@@ -52,6 +54,11 @@ export default function App() {
     )
   }
 
+  function newGame() {
+    setNumRolls(0)
+    setDice(generateAllNewDice())
+  }
+
   // JSX elements
   return (
     <main>
@@ -64,9 +71,10 @@ export default function App() {
       <div className="dice-container">
         {diceComponents}
       </div>
+      {gameWon && <p>You won in {numRolls} rolls!</p>}
       <button
         ref={buttonRef}
-        onClick={gameWon ? () => setDice(generateAllNewDice()) : rollDice}
+        onClick={gameWon ? newGame : rollDice}
         className="roll-button"
       >
         {gameWon ? "New Game" : "Roll"}
