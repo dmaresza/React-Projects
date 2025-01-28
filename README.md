@@ -1,1 +1,1 @@
-A collection of projects to practice my React skills
+A collection of projects to showcase my React knowledge and skills
