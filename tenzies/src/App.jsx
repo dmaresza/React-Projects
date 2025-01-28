@@ -9,6 +9,7 @@ export default function App() {
   // Constants
   const [dice, setDice] = useState(() => generateAllNewDice())
   const [numRolls, setNumRolls] = useState(0)
+  const [bestScore, setBestScore] = useState(Infinity)
   const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
   const diceComponents = dice.map(die => (
     <Die
@@ -20,6 +21,10 @@ export default function App() {
     />))
   const buttonRef = useRef(null)
   const { width, height } = useWindowSize()
+
+  if (gameWon && numRolls < bestScore) {
+    setBestScore(numRolls)
+  }
 
   // Effects
   useEffect(() => {
@@ -71,7 +76,6 @@ export default function App() {
       <div className="dice-container">
         {diceComponents}
       </div>
-      {gameWon && <p>You won in {numRolls} rolls!</p>}
       <button
         ref={buttonRef}
         onClick={gameWon ? newGame : rollDice}
@@ -79,6 +83,9 @@ export default function App() {
       >
         {gameWon ? "New Game" : "Roll"}
       </button>
+      {gameWon &&
+        <p>You won in {numRolls} rolls!<br /><br /> <b>Best Score: {bestScore}</b></p>
+      }
     </main>
   )
 }
