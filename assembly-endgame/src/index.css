@@ -9,8 +9,12 @@ body {
   color: #F9F4DA;
   padding: 20px;
   height: 100vh;
+}
+
+main {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 header {
@@ -35,6 +39,8 @@ header>p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  max-width: 350px;
   height: 60px;
   margin-block: 30px;
 }
@@ -85,6 +91,7 @@ header>p {
   flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
+  max-width: 450px;
 }
 
 .keyboard>button {
@@ -96,4 +103,18 @@ header>p {
   width: 40px;
   border-radius: 4px;
   border: 1px solid #D7D7D7;
+  cursor: pointer;
+}
+
+.new-game {
+  margin-block: 30px;
+  border: 1px solid #D7D7D7;
+  background-color: #11B5E5;
+  font-family: "Hanken Grotesk", Arial, sans-serif;
+  width: 200px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
 }
