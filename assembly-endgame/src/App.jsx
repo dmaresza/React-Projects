@@ -6,6 +6,9 @@ export default function App() {
   const [currentWord, setCurrentWord] = useState("react")
   const letters = currentWord.toUpperCase().split("").map(letter => <span>{letter}</span>)
 
+  const alphabet = "abcdefghijklmnopqrstuvwxyz"
+  const keyboard = alphabet.toUpperCase().split("").map(letter => <button key={letter}>{letter}</button>)
+
   const languageElements = languages.map(language => (
     <span key={language.name} className="language-chip" style={
       {
@@ -32,6 +35,9 @@ export default function App() {
       </section>
       <section className="guess-word">
         {letters}
+      </section>
+      <section className="keyboard">
+        {keyboard}
       </section>
     </main>
   )
