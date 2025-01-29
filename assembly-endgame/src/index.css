@@ -47,3 +47,17 @@ header>p {
 .status>p {
   margin: 0;
 }
+
+.languages {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 300px;
+  justify-content: center;
+  gap: 2px;
+}
+
+.language-chip {
+  border-radius: 3px;
+  font-size: 0.75rem;
+  padding: 5px;
+}
