@@ -61,3 +61,21 @@ header>p {
   font-size: 0.75rem;
   padding: 5px;
 }
+
+.guess-word {
+  margin-block: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.guess-word>span {
+  height: 40px;
+  width: 40px;
+  border-bottom: 1px solid #F9F4DA;
+  background-color: #323232;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+}

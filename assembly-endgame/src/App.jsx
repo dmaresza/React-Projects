@@ -3,6 +3,9 @@ import { languages } from "./languages"
 
 export default function App() {
 
+  const [currentWord, setCurrentWord] = useState("react")
+  const letters = currentWord.toUpperCase().split("").map(letter => <span>{letter}</span>)
+
   const languageElements = languages.map(language => (
     <span key={language.name} className="language-chip" style={
       {
@@ -26,6 +29,9 @@ export default function App() {
       </section>
       <section className="languages">
         {languageElements}
+      </section>
+      <section className="guess-word">
+        {letters}
       </section>
     </main>
   )
