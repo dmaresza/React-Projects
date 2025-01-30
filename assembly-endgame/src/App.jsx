@@ -11,6 +11,10 @@ export default function App() {
   // Derived variables
   const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length
 
+  const isGameLost = wrongGuessCount >= languages.length - 1
+  const isGameWon = guessedLetters.filter(letter => currentWord.includes(letter)).length === currentWord.length
+  const isGameOver = isGameWon || isGameLost
+
   const languageElements = languages.map((language, index) => {
     const className = clsx("chip", { "lost": index < wrongGuessCount })
 
@@ -37,6 +41,7 @@ export default function App() {
       key={letter}
       onClick={() => guessLetter(letter)}
       className={className}
+      disabled={isGameOver}
     >
       {letter.toUpperCase()}
     </button>
@@ -48,6 +53,10 @@ export default function App() {
       prevGuesses.includes(letter) ? prevGuesses : [...prevGuesses, letter]))
   }
 
+  function newGame() {
+    setGuessedLetters([])
+  }
+
   // DOM Elements
   return (
     <main>
@@ -55,9 +64,13 @@ export default function App() {
         <h1>Assembly: Endgame</h1>
         <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
       </header>
-      <section className="status">
-        <h2>You win!</h2>
-        <p>Well done! 🎉</p>
+      <section className={clsx("status", { "won": isGameWon }, { "lost": isGameLost })}>
+        {isGameOver &&
+          <>
+            <h2>{isGameWon ? "You win!" : "Game over!"}</h2>
+            <p>{isGameWon ? "Well done! 🎉" : "You lose! Better start learning Assembly 😭"}</p>
+          </>
+        }
       </section>
       <section className="languages">
         {languageElements}
@@ -68,7 +81,7 @@ export default function App() {
       <section className="keyboard">
         {keyboard}
       </section>
-      <button className="new-game">New Game</button>
+      {isGameOver && <button className="new-game" onClick={() => newGame()}>New Game</button>}
     </main>
   )
 }

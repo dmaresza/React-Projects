@@ -33,7 +33,7 @@ header>p {
 }
 
 .status {
-  background-color: #10A95B;
+  /* background-color: #10A95B; */
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -43,6 +43,14 @@ header>p {
   max-width: 350px;
   height: 60px;
   margin-block: 30px;
+}
+
+.status.won {
+  background-color: #10A95B;
+}
+
+.status.lost {
+  background-color: #BA2A2A;
 }
 
 .status>h2 {
@@ -128,6 +136,10 @@ span.chip.lost::before {
 
 .keyboard>button.incorrect {
   background-color: #EC5D49;
+}
+
+.keyboard>button:disabled {
+  cursor: not-allowed;
 }
 
 .new-game {
