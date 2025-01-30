@@ -106,6 +106,14 @@ header>p {
   cursor: pointer;
 }
 
+.keyboard>button.correct {
+  background-color: #10A95B;
+}
+
+.keyboard>button.incorrect {
+  background-color: #EC5D49;
+}
+
 .new-game {
   margin-block: 30px;
   border: 1px solid #D7D7D7;

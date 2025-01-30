@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { languages } from "./languages"
+// import { clsx } from "clsx"
 
 export default function App() {
 
+  // State variables
   const [currentWord, setCurrentWord] = useState("react")
-  const letters = currentWord.toUpperCase().split("").map(letter => <span>{letter}</span>)
+  const [guessedLetters, setGuessedLetters] = useState([])
 
-  const alphabet = "abcdefghijklmnopqrstuvwxyz"
-  const keyboard = alphabet.toUpperCase().split("").map(letter => <button key={letter}>{letter}</button>)
-
+  // Derived variables
   const languageElements = languages.map(language => (
     <span key={language.name} className="language-chip" style={
       {
@@ -20,6 +20,31 @@ export default function App() {
     </span>
   ))
 
+  const letterElements = currentWord.split("").map((letter, index) =>
+    <span key={index}>{guessedLetters.includes(letter) && letter.toUpperCase()}</span>)
+
+  const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+  const keyboard = alphabet.split("").map(letter => {
+    const correctGuess = guessedLetters.includes(letter) && currentWord.includes(letter)
+    const incorrectGuess = guessedLetters.includes(letter) && !currentWord.includes(letter)
+    const className = correctGuess ? "correct" : (incorrectGuess ? "incorrect" : "")
+    return <button
+      key={letter}
+      onClick={() => guessLetter(letter)}
+      className={className}
+    >
+      {letter.toUpperCase()}
+    </button>
+  })
+
+  // Functions
+  function guessLetter(letter) {
+    setGuessedLetters(prevGuesses => (
+      prevGuesses.includes(letter) ? prevGuesses : [...prevGuesses, letter]))
+  }
+
+  // DOM Elements
   return (
     <main>
       <header>
@@ -34,7 +59,7 @@ export default function App() {
         {languageElements}
       </section>
       <section className="guess-word">
-        {letters}
+        {letterElements}
       </section>
       <section className="keyboard">
         {keyboard}
