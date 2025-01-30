@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { languages } from "./languages"
-// import { clsx } from "clsx"
+import { clsx } from "clsx"
 
 export default function App() {
 
@@ -9,8 +9,12 @@ export default function App() {
   const [guessedLetters, setGuessedLetters] = useState([])
 
   // Derived variables
-  const languageElements = languages.map(language => (
-    <span key={language.name} className="language-chip" style={
+  const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length
+
+  const languageElements = languages.map((language, index) => {
+    const className = clsx("chip", { "lost": index < wrongGuessCount })
+
+    return <span key={language.name} className={className} style={
       {
         backgroundColor: language.backgroundColor,
         color: language.color
@@ -18,7 +22,7 @@ export default function App() {
     }>
       {language.name}
     </span>
-  ))
+  })
 
   const letterElements = currentWord.split("").map((letter, index) =>
     <span key={index}>{guessedLetters.includes(letter) && letter.toUpperCase()}</span>)
@@ -28,7 +32,7 @@ export default function App() {
   const keyboard = alphabet.split("").map(letter => {
     const correctGuess = guessedLetters.includes(letter) && currentWord.includes(letter)
     const incorrectGuess = guessedLetters.includes(letter) && !currentWord.includes(letter)
-    const className = correctGuess ? "correct" : (incorrectGuess ? "incorrect" : "")
+    const className = clsx({ correct: correctGuess }, { incorrect: incorrectGuess })
     return <button
       key={letter}
       onClick={() => guessLetter(letter)}
