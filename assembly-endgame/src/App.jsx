@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { languages } from "./languages"
 import { clsx } from "clsx"
 import { getFarewellText, getNewWord } from './utils'
+import Confetti from "react-confetti"
+import { useWindowSize } from "react-use"
 
 export default function App() {
 
   // State values
-  const [currentWord, setCurrentWord] = useState(getNewWord())
+  const [currentWord, setCurrentWord] = useState(() => getNewWord())
   const [guessedLetters, setGuessedLetters] = useState([])
 
   // Derived values
@@ -19,8 +21,9 @@ export default function App() {
   const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
   const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
 
-  // Static values
+  // Other values
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
+  const { width, height } = useWindowSize()
 
   // DOM Elements
   const languageElements = languages.map((language, index) => {
@@ -37,7 +40,9 @@ export default function App() {
   })
 
   const letterElements = currentWord.split("").map((letter, index) =>
-    <span key={index}>{guessedLetters.includes(letter) && letter.toUpperCase()}</span>)
+    <span key={index} className={clsx({ "incorrect": !guessedLetters.includes(letter) })}>
+      {isGameOver ? letter.toUpperCase() : guessedLetters.includes(letter) && letter.toUpperCase()}
+    </span>)
 
   const keyboard = alphabet.split("").map(letter => {
     const correctGuess = guessedLetters.includes(letter) && currentWord.includes(letter)
@@ -93,6 +98,7 @@ export default function App() {
   // App return
   return (
     <main>
+      {isGameWon && <Confetti width={width} height={height} />}
       <header>
         <h1>Assembly: Endgame</h1>
         <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>

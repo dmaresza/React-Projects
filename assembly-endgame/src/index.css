@@ -115,6 +115,10 @@ span.chip.lost::before {
   font-size: 1.125rem;
 }
 
+.guess-word>span.incorrect {
+  color: #EC5D49;
+}
+
 .keyboard {
   display: flex;
   flex-wrap: wrap;
