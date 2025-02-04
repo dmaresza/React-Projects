@@ -1,19 +1,19 @@
 import { useState } from 'react'
 import { languages } from "./languages"
 import { clsx } from "clsx"
-import { getFarewellText } from './utils'
+import { getFarewellText, getNewWord } from './utils'
 
 export default function App() {
 
   // State values
-  const [currentWord, setCurrentWord] = useState("react")
+  const [currentWord, setCurrentWord] = useState(getNewWord())
   const [guessedLetters, setGuessedLetters] = useState([])
 
   // Derived values
   const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length
 
   const isGameLost = wrongGuessCount >= languages.length - 1
-  const isGameWon = guessedLetters.filter(letter => currentWord.includes(letter)).length === currentWord.length
+  const isGameWon = currentWord.split("").every(letter => guessedLetters.includes(letter))
   const isGameOver = isGameWon || isGameLost
 
   const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
@@ -63,6 +63,7 @@ export default function App() {
 
   function newGame() {
     setGuessedLetters([])
+    setCurrentWord(getNewWord())
   }
 
   function renderGameStatus() {
