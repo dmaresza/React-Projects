@@ -1,20 +1,28 @@
 import { useState } from 'react'
 import { languages } from "./languages"
 import { clsx } from "clsx"
+import { getFarewellText } from './utils'
 
 export default function App() {
 
-  // State variables
+  // State values
   const [currentWord, setCurrentWord] = useState("react")
   const [guessedLetters, setGuessedLetters] = useState([])
 
-  // Derived variables
+  // Derived values
   const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length
 
   const isGameLost = wrongGuessCount >= languages.length - 1
   const isGameWon = guessedLetters.filter(letter => currentWord.includes(letter)).length === currentWord.length
   const isGameOver = isGameWon || isGameLost
 
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
+  const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
+
+  // Static values
+  const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+  // DOM Elements
   const languageElements = languages.map((language, index) => {
     const className = clsx("chip", { "lost": index < wrongGuessCount })
 
@@ -30,8 +38,6 @@ export default function App() {
 
   const letterElements = currentWord.split("").map((letter, index) =>
     <span key={index}>{guessedLetters.includes(letter) && letter.toUpperCase()}</span>)
-
-  const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   const keyboard = alphabet.split("").map(letter => {
     const correctGuess = guessedLetters.includes(letter) && currentWord.includes(letter)
@@ -57,20 +63,39 @@ export default function App() {
     setGuessedLetters([])
   }
 
-  // DOM Elements
+  function renderGameStatus() {
+    if (isGameWon) {
+      return (
+        <>
+          <h2>You win!</h2>
+          <p>Well done! 🎉</p>
+        </>
+      )
+    } else if (isGameLost) {
+      return (
+        <>
+          <h2>Game over!</h2>
+          <p>You lose! Better start learning Assembly 😭</p>
+        </>
+      )
+    } else if (isLastGuessIncorrect) {
+      return (
+        <h2>{getFarewellText(languages[wrongGuessCount - 1].name)}</h2>
+      )
+    } else {
+      return null
+    }
+  }
+
+  // App return
   return (
     <main>
       <header>
         <h1>Assembly: Endgame</h1>
         <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
       </header>
-      <section className={clsx("status", { "won": isGameWon }, { "lost": isGameLost })}>
-        {isGameOver &&
-          <>
-            <h2>{isGameWon ? "You win!" : "Game over!"}</h2>
-            <p>{isGameWon ? "Well done! 🎉" : "You lose! Better start learning Assembly 😭"}</p>
-          </>
-        }
+      <section className={clsx("status", { "won": isGameWon }, { "lost": isGameLost }, { "incorrect": !isGameOver && isLastGuessIncorrect })}>
+        {renderGameStatus()}
       </section>
       <section className="languages">
         {languageElements}

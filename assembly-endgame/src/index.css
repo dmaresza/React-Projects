@@ -33,7 +33,6 @@ header>p {
 }
 
 .status {
-  /* background-color: #10A95B; */
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -51,6 +50,12 @@ header>p {
 
 .status.lost {
   background-color: #BA2A2A;
+}
+
+.status.incorrect {
+  background-color: #7A5EA7;
+  border: 1px dashed #323232;
+  font-style: italic;
 }
 
 .status>h2 {
