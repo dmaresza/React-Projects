@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #121213;
+  color: white;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.guesses {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 40px;
+}
+
+.guesses>div {
+  display: flex;
+  gap: 4px;
+}
+
+.guesses>div>span {
+  height: 40px;
+  width: 30px;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px;
+  max-width: 240px;
+}
+
+.keyboard>button {
+  background-color: gray;
+  color: white;
+  border: none;
+  height: 30px;
+  width: 20px;
+}
