@@ -7,18 +7,25 @@ export default function App() {
   const [currentGuess, setCurrentGuess] = useState([])
   const [prevGuesses, setPrevGuesses] = useState([])
   const [guessCount, setGuessCount] = useState(0)
+  // const [correctLetters, setCorrectLetters] = useState([])
+  const [guessedLetters, setGuessedLetters] = useState([])
 
   const alphabet = "qwertyuiopasdfghjklzxcvbnm"
 
   const guessElements =
     <>
-      <Guess {...(guessCount === 0 ? { currentGuess } : {})} guessCount={guessCount} id={0} prevGuesses={prevGuesses} />
-      <Guess {...(guessCount === 1 ? { currentGuess } : {})} guessCount={guessCount} id={1} prevGuesses={prevGuesses} />
-      <Guess {...(guessCount === 2 ? { currentGuess } : {})} guessCount={guessCount} id={2} prevGuesses={prevGuesses} />
-      <Guess {...(guessCount === 3 ? { currentGuess } : {})} guessCount={guessCount} id={3} prevGuesses={prevGuesses} />
-      <Guess {...(guessCount === 4 ? { currentGuess } : {})} guessCount={guessCount} id={4} prevGuesses={prevGuesses} />
-      <Guess {...(guessCount === 5 ? { currentGuess } : {})} guessCount={guessCount} id={5} prevGuesses={prevGuesses} />
+      <Guess currentGuess={currentGuess} guessCount={guessCount} id={0} prevGuesses={prevGuesses} currentWord={currentWord} />
+      <Guess currentGuess={currentGuess} guessCount={guessCount} id={1} prevGuesses={prevGuesses} currentWord={currentWord} />
+      <Guess currentGuess={currentGuess} guessCount={guessCount} id={2} prevGuesses={prevGuesses} currentWord={currentWord} />
+      <Guess currentGuess={currentGuess} guessCount={guessCount} id={3} prevGuesses={prevGuesses} currentWord={currentWord} />
+      <Guess currentGuess={currentGuess} guessCount={guessCount} id={4} prevGuesses={prevGuesses} currentWord={currentWord} />
+      <Guess currentGuess={currentGuess} guessCount={guessCount} id={5} prevGuesses={prevGuesses} currentWord={currentWord} />
     </>
+
+  const guessList = [["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]]
+
+  const letterElements = guessList.map(guess => <div>{guess.map((letter, index) =>
+    <span key={index}>{letter}</span>)}</div>)
 
 
   const keyboardElements = alphabet.split("").map(letter =>
@@ -35,6 +42,9 @@ export default function App() {
     if (currentGuess.length === 5) {
       setGuessCount(prevCount => prevCount + 1)
       setPrevGuesses(guesses => [...guesses, currentGuess])
+      setGuessedLetters(prevLetters => [...prevLetters, ...currentGuess.filter(letter => !prevLetters.includes(letter))])
+      // setCorrectLetters(prevLetters => [...prevLetters, ...currentGuess.filter(letter => currentWord.includes(letter) && !prevLetters.includes(letter))])
+      // setCorrectLetters(prevLetters => [...prevLetters, ...currentWord.split("").filter(letter => currentGuess.includes(letter) && !prevLetters.includes(letter))])
       setCurrentGuess([])
     }
   }
@@ -63,3 +73,18 @@ export default function App() {
     </main>
   )
 }
+
+
+/* 
+Get 5-letter word to be guessed (WTBG)
+
+Display 6x5 grid (6 guesses, 5 letters each)
+Display keyboard
+
+On keyboard letter click: update current guess (of 6 guesses) to display letter (max 5 letters)
+On backspace click: remove last-clicked letter (nothing happens if no letters displayed)
+On Enter click: check guessed letters against WTBG, display correct/close letters,
+move to next guess if guessCount < 6 and correct word not guessed,
+win game if correct word guessed, lose game if guessCount limit reached
+
+*/

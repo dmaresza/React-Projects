@@ -38,6 +38,18 @@ main {
   border-radius: 4px;
 }
 
+.guesses>div>span.correct {
+  background-color: green;
+}
+
+.guesses>div>span.wrong {
+  background-color: darkslategray;
+}
+
+.guesses>div>span.close {
+  background-color: yellow;
+}
+
 .keyboard {
   display: flex;
   flex-wrap: wrap;
