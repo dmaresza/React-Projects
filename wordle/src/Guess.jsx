@@ -12,7 +12,7 @@ export default function Guess(props) {
         const wordMap = new Map()
         props.currentWord.split("").forEach((letter, index) => wordMap.has(letter) ? wordMap.set(letter, [...wordMap.get(letter), index]) : wordMap.set(letter, [index]))
         const displayWord = props.prevGuesses[props.id]
-        const classNames = ["", "", "", "", ""]
+        const classNames = ["wrong", "wrong", "wrong", "wrong", "wrong"]
         displayWord.forEach((letter, index) => {
             if (wordMap.has(letter) && wordMap.get(letter).includes(index)) {
                 classNames[index] = "correct"
