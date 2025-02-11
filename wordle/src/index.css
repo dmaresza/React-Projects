@@ -21,7 +21,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 }
 
 .guesses>div {
@@ -50,6 +50,21 @@ main {
 
 .guesses>div>span.close {
   background-color: #dddd00;
+}
+
+.status {
+  margin: 20px;
+  height: 30px;
+}
+
+.status-section {
+  margin: 20px;
+  background-color: white;
+  color: black;
+  padding: 5px;
+  border-radius: 5px;
+  height: 30px;
+  font-weight: 700;
 }
 
 .keyboard {
@@ -83,4 +98,14 @@ main {
 
 .keyboard>button.wrong {
   background-color: darkslategray;
+}
+
+.new-game {
+  margin-top: 30px;
+  background-color: #11B5E5;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  color: white;
+  padding: 10px;
 }

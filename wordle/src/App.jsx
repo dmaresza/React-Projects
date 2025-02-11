@@ -4,15 +4,21 @@ import { getNewWord } from './words'
 
 export default function App() {
 
+  // State values 
   const [currentWord, setCurrentWord] = useState(() => getNewWord())
   const [currentGuess, setCurrentGuess] = useState([])
   const [prevGuesses, setPrevGuesses] = useState([])
   const [guessCount, setGuessCount] = useState(0)
-  // const [correctLetters, setCorrectLetters] = useState([])
   const [guessedLetters, setGuessedLetters] = useState([])
 
+  // Derived values
+  const isGameWon = prevGuesses.length > 0 ? prevGuesses[prevGuesses.length - 1].join("") === currentWord : false
+  const isGameLost = guessCount > 0 ? guessCount > 5 && prevGuesses[5].join("") != currentWord : false
+
+  // Other values
   const alphabet = "qwertyuiopasdfghjklzxcvbnm"
 
+  // DOM Elements
   const guessElements =
     <>
       <Guess currentGuess={currentGuess} guessCount={guessCount} id={0} prevGuesses={prevGuesses} currentWord={currentWord} />
@@ -40,6 +46,7 @@ export default function App() {
   }
   )
 
+  // Functions
   function guessLetter(letter) {
     if (currentGuess.length < 5) {
       setCurrentGuess(prevGuess => [...prevGuess, letter])
@@ -65,17 +72,35 @@ export default function App() {
     }
   }
 
+  function newGame() {
+    setCurrentWord(getNewWord())
+    setCurrentGuess([])
+    setPrevGuesses([])
+    setGuessCount(0)
+    setGuessedLetters([])
+  }
+
+  // App return
   return (
     <main>
       <h1>Wordle</h1>
       <section className="guesses">
         {guessElements}
       </section>
+      <section className={(isGameWon || isGameLost) ? "status-section" : "status"}>{isGameWon ? "You win! 🎉" : isGameLost ? currentWord.toUpperCase() : ""}</section>
       <section className="keyboard">
         {keyboardElements}
         <button onClick={() => submit()}>↵</button>
         <button onClick={() => backspace()}>⌫</button>
       </section>
+      {(isGameWon || isGameLost) && <button className="new-game" onClick={() => newGame()}>New Game</button>}
     </main>
   )
 }
+
+// Genius
+// Magnificent
+// Impressive
+// Splendid
+// Great
+// Phew
