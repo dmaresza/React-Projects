@@ -84,16 +84,22 @@ export default function App() {
   return (
     <main>
       <h1>Wordle</h1>
+      <p><b>How to play: </b>Guess the 5-letter word in 6 tries!
+        If your guess has the same letter in the same position as the secret word, the letter will be highlighted green.
+        If the letter is in the word but in a different position, it will be highlighted yellow.<br></br><br></br>
+        (Note: Keyboard functionality is currently not enabled. Please click on each letter to select it)</p>
       <section className="guesses">
         {guessElements}
       </section>
-      <section className={(isGameWon || isGameLost) ? "status-section" : "status"}>{isGameWon ? "You win! 🎉" : isGameLost ? currentWord.toUpperCase() : ""}</section>
+      <section className={(isGameWon || isGameLost) ? "status-section" : "status"}>
+        {isGameWon ? "You win! 🎉" : isGameLost ? currentWord.toUpperCase() : ""}
+      </section>
       <section className="keyboard">
         {keyboardElements}
         <button onClick={() => submit()}>↵</button>
         <button onClick={() => backspace()}>⌫</button>
       </section>
-      {(isGameWon || isGameLost) && <button className="new-game" onClick={() => newGame()}>New Game</button>}
+      {(isGameWon || isGameLost) && <button className="new-game" onClick={() => newGame()}>Play Again</button>}
     </main>
   )
 }

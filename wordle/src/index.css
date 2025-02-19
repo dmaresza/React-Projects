@@ -21,6 +21,14 @@ main>h1 {
   font-size: 2.5rem;
 }
 
+main>p {
+  margin: 0;
+  max-width: 400px;
+  font-size: 0.9rem;
+  color: gray;
+  margin-bottom: 40px;
+}
+
 .guesses {
   display: flex;
   flex-direction: column;
@@ -108,10 +116,11 @@ main>h1 {
 
 .new-game {
   margin-top: 30px;
-  background-color: #11B5E5;
+  /* background-color: #11B5E5; */
   border: none;
   border-radius: 5px;
   font-size: 1.5rem;
-  color: white;
+  /* color: white; */
+  color: black;
   padding: 10px;
 }
