@@ -116,11 +116,10 @@ main>p {
 
 .new-game {
   margin-top: 30px;
-  /* background-color: #11B5E5; */
   border: none;
   border-radius: 5px;
   font-size: 1.5rem;
-  /* color: white; */
   color: black;
   padding: 10px;
+  cursor: pointer;
 }

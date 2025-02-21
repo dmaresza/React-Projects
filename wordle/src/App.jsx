@@ -41,7 +41,7 @@ export default function App() {
     else if (guessedLetters.includes(letter) && !currentWord.includes(letter)) {
       className = "wrong"
     }
-    return < button key={letter} className={className} onClick={() => guessLetter(letter)
+    return < button key={letter} className={className} disabled={isGameWon || isGameLost} onClick={() => guessLetter(letter)
     }> {letter.toUpperCase()}</button >
   }
   )
@@ -96,8 +96,8 @@ export default function App() {
       </section>
       <section className="keyboard">
         {keyboardElements}
-        <button onClick={() => submit()}>↵</button>
-        <button onClick={() => backspace()}>⌫</button>
+        <button disabled={isGameWon || isGameLost} onClick={() => submit()}>↵</button>
+        <button disabled={isGameWon || isGameLost} onClick={() => backspace()}>⌫</button>
       </section>
       {(isGameWon || isGameLost) && <button className="new-game" onClick={() => newGame()}>Play Again</button>}
     </main>
