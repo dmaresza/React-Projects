@@ -17,6 +17,7 @@ export default function App() {
 
   // Other values
   const alphabet = "qwertyuiopasdfghjklzxcvbnm"
+  const quotes = ['Genius', 'Magnificent', 'Impressive', 'Splendid', 'Great', 'Phew']
 
   // DOM Elements
   const guessElements =
@@ -41,7 +42,7 @@ export default function App() {
     else if (guessedLetters.includes(letter) && !currentWord.includes(letter)) {
       className = "wrong"
     }
-    return < button key={letter} className={className} disabled={isGameWon || isGameLost} onClick={() => guessLetter(letter)
+    return < button style={{ gridArea: { letter } }} key={letter} className={className} disabled={isGameWon || isGameLost} onClick={() => guessLetter(letter)
     }> {letter.toUpperCase()}</button >
   }
   )
@@ -80,19 +81,35 @@ export default function App() {
     setGuessedLetters([])
   }
 
+  const handleKeyDown = (event) => {
+    event.preventDefault();
+    const key = event.key;
+    switch (key) {
+      case 'Backspace':
+        backspace();
+        break;
+      case 'Enter':
+        submit();
+        break;
+      default:
+        guessLetter(key);
+        break;
+    }
+  };
+
   // App return
   return (
-    <main>
+    <main onKeyDown={handleKeyDown}>
       <h1>Wordle</h1>
-      <p><b>How to play: </b>Guess the 5-letter word in 6 tries!
+      <p><b>How to play: </b>Guess the secret 5-letter word in 6 tries!
         If your guess has the same letter in the same position as the secret word, the letter will be highlighted green.
-        If the letter is in the word but in a different position, it will be highlighted yellow.<br></br><br></br>
+        If a guessed letter is in the secret word but in a different position, it will be highlighted yellow.<br></br><br></br>
         (Note: Keyboard functionality is currently not enabled. Please click on each letter to select it)</p>
       <section className="guesses">
         {guessElements}
       </section>
       <section className={(isGameWon || isGameLost) ? "status-section" : "status"}>
-        {isGameWon ? "You win! 🎉" : isGameLost ? currentWord.toUpperCase() : ""}
+        {isGameWon ? quotes[guessCount - 1].toUpperCase() : isGameLost ? currentWord.toUpperCase() : ""}
       </section>
       <section className="keyboard">
         {keyboardElements}
