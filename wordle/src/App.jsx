@@ -18,6 +18,7 @@ export default function App() {
 
   // Other values
   const alphabet = "qwertyuiopasdfghjklzxcvbnm";
+  const keyboard = "qwertyuiopasdfghjkl↵zxcvbnm⌫";
   const quotes = ['Genius', 'Magnificent', 'Impressive', 'Splendid', 'Great', 'Phew'];
 
   const backspaceRef = useRef(backspace);
@@ -55,20 +56,34 @@ export default function App() {
       <Guess currentGuess={currentGuess} guessCount={guessCount} id={5} prevGuesses={prevGuesses} currentWord={currentWord} />
     </>
 
-  const keyboardElements = alphabet.split("").map(letter => {
-    let className = "";
-    const tempArray = prevGuesses.flat();
-    if (tempArray.some((char, index) => currentWord[index % 5] === char && char === letter)) {
-      className = "correct";
-    }
-    else if (guessedLetters.includes(letter) && currentWord.includes(letter)) {
-      className = "close";
-    }
-    else if (guessedLetters.includes(letter) && !currentWord.includes(letter)) {
-      className = "wrong";
-    }
-    return < button style={{ gridArea: { letter } }} key={letter} className={className} disabled={isGameOver} onClick={() => guessLetter(letter)
-    }> {letter.toUpperCase()}</button >
+  const rows = [keyboard.slice(0, 10), keyboard.slice(10, 19), keyboard.slice(19)];
+  const keyboardElements = rows.map((row, index) => {
+    return <div key={index} className="keyboard-row">
+      {row.split("").map(letter => {
+        let className = "";
+        const tempArray = prevGuesses.flat();
+        if (tempArray.some((char, index) => currentWord[index % 5] === char && char === letter)) {
+          className = "correct";
+        }
+        else if (guessedLetters.includes(letter) && currentWord.includes(letter)) {
+          className = "close";
+        }
+        else if (guessedLetters.includes(letter) && !currentWord.includes(letter)) {
+          className = "wrong";
+        }
+        if (letter == "⌫") {
+          return <button key={letter} className="backspace" disabled={isGameOver} onClick={() => backspace()}>⌫</button>
+        }
+        else if (letter == "↵") {
+          return <button key={letter} className="enter" disabled={isGameOver} onClick={() => submit()}>Enter</button>
+        }
+        else {
+          return <button key={letter} className={className} disabled={isGameOver} onClick={() => guessLetter(letter)}>
+            {letter.toUpperCase()}
+          </button>
+        }
+      })}
+    </div>
   });
 
   // Functions
@@ -120,8 +135,6 @@ export default function App() {
       </section>
       <section className="keyboard">
         {keyboardElements}
-        <button disabled={isGameOver} onClick={() => submit()}>↵</button>
-        <button disabled={isGameOver} onClick={() => backspace()}>⌫</button>
       </section>
       {isGameOver && <button className="new-game" onClick={() => newGame()}>Play Again</button>}
     </main>

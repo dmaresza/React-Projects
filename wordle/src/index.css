@@ -82,13 +82,19 @@ main>p {
 
 .keyboard {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
-  gap: 3px;
+  gap: 5px;
   max-width: 350px;
 }
 
-.keyboard>button {
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.keyboard-row>button {
   background-color: gray;
   color: white;
   border: none;
@@ -102,15 +108,25 @@ main>p {
   justify-content: center;
 }
 
-.keyboard>button.correct {
+.keyboard-row>button.backspace {
+  width: 45px;
+}
+
+.keyboard-row>button.enter {
+  width: 45px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.keyboard-row>button.correct {
   background-color: #339933;
 }
 
-.keyboard>button.close {
+.keyboard-row>button.close {
   background-color: #dddd00;
 }
 
-.keyboard>button.wrong {
+.keyboard-row>button.wrong {
   background-color: darkslategray;
 }
 
